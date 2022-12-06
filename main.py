@@ -1,8 +1,13 @@
 from aiogram import executor,Dispatcher,Bot,types
+import requests
+
+
+
 
 api_key="5738749831:AAHcNuNUdtyPospKQMLchZJkxh8sueiMgH0"
 bot_obj=Bot(token=api_key)
 bot=Dispatcher(bot_obj)
+
 
 
 
@@ -105,7 +110,16 @@ async def echo_all(message:types.Message):
 
 @bot.message_handler(content_types=[types.ContentType.NEW_CHAT_MEMBERS, types.ContentType.LEFT_CHAT_MEMBER])
 async def user_joined_chat(message: types.Message):
-    print(message)
+    name=message['new_chat_participant']['first_name']+" "+message['new_chat_participant']['last_name']
+    msg=f"""
+    -Hi , {name} welcome to official Blockorry LTD investment telegram group. 
+    Blockorry is a life change investment platform, here you will earn hourly profit by investing with us. 
+    Feel free to ask your questions politely in our group and you can also contact our support for further assistance 
+    by clicking link: https://telegram.me/Blockonics_support
+    
+    """
+
+    r=requests.get(f"https://api.telegram.org/bot{api_key}/sendMessage?chat_id={message['new_chat_participant']['id']}&text={msg}")
 
 
 executor.start_polling(bot)
