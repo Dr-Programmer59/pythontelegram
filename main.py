@@ -94,7 +94,7 @@ async def echo_all(message:types.Message):
     ]
 
     for question in questions:
-        if(question[0].lower() in message['text'] or question[0].capitalize() in message['text'] or question in message['text']):
+        if(question[0].lower() in message['text'] or question[0].capitalize() in message['text'] or question[0] in message['text']):
             await message.reply(question[1])
     
     
